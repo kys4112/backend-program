@@ -14,11 +14,11 @@ public class HelloWorldController {
     }
 
     // http://localhost:8080/test -> "Hello Everyone!!!!"
-    @GetMapping("/test")
-    public String test() {
-        return "Hello Everyone!!!!";
-    // 클라이언트 요청 방식 1.Get 2.Post 3.Patch(put) 4.Delete
-    }
+//    @GetMapping("/test")
+//    public String test() {
+//        return "Hello Everyone!!!!";
+//     클라이언트 요청 방식 1.Get 2.Post 3.Patch(put) 4.Delete
+//    }
 
     @PostMapping("/test")
     public String postTest() {
@@ -34,6 +34,8 @@ public class HelloWorldController {
     public String PutTest() {
         return "Put Test response!!!!!!!!";
     }
+
+
 
 
 }
