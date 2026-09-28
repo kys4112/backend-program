@@ -1,23 +1,20 @@
 package me.kys.springdeveloper;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*; // 혹은 javax.persistence.* (스프링 부트 버전에 따라 다름)
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Getter
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Member {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // <-- 이 줄이 꼭 있어야 자동으로 ID가 1, 2, 3... 증가합니다!
     private Long id;
-    @Column(name ="name", nullable = false)
+
     private String name;
-
-
+    private String email;
 }
-
