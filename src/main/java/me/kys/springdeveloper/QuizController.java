@@ -24,7 +24,7 @@ public class QuizController {
         System.out.println("----------------------------------------------------------["+code+"]");
         switch (code.value()) {
             case 1:
-                return ResponseEntity.status(403).body("Created!");
+                return ResponseEntity.status(403).body("Forbidden!");
             default:
                 return ResponseEntity.ok().body("OK!");
         }

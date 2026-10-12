@@ -17,4 +17,9 @@ public class Member {
 
     private String name;
     private String email;
+
+    // ai가 추가한것
+    public Member(String name) {
+        this.name = name;
+    }
 }
