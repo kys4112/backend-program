@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+
 @AutoConfigureMockMvc
 class QuizControllerTest {
 
@@ -38,11 +39,18 @@ class QuizControllerTest {
         result.andExpect(status().isCreated()).andExpect(content().string("Created!"));
     }
 //    -숙제-
-//    @DisplayName("GET /quiz?code=2 => 응답코드는 400, 응답 본문은 Bad Request!를 리턴한다.")
-//    @Test
-//    public void getQuiz2() throws Exception {
-//
-//    }
+    @DisplayName("GET /quiz?code=2 => 응답코드는 400, 응답 본문은 Bad Request!를 리턴한다.")
+    @Test
+    public void getQuiz2() throws Exception {
+        // 준비 given
+        final String url = "/quiz";
+
+        // 실행 when
+        final ResultActions result = mockMvc.perform(get(url).param("code", "2"));
+
+        // 검증 then
+        result.andExpect(status().isBadRequest()).andExpect(content().string("Bad Request!"));
+    }
 
     @DisplayName("POST /quiz 요청, 요청 바디에 {'value':1}이면 응답코드는 403, 응답 본문은 Forbidden!")
     @Test
