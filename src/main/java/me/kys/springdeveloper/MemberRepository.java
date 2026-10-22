@@ -4,6 +4,7 @@ package me.kys.springdeveloper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -11,13 +12,15 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     // findAll() : select * from member;
     // findById() : select * from member where id = ?
     // deleteAll() : delete from member;
-    //deleteById() : delete from member where id = ?
+    // deleteById() : delete from member where id = ?
     // save() : insert into member(id, name) values (?, ?), update member set ... where id = ?
 
     // 예시: 이런걸 실행하고싶으면?
     // select * from member where name = ?
     // 답: findByName() : select * from member where name = ?
-
+    //public List<Member> findByName(String name);
+    public Optional<Member> findByName(String name);
+    // select * from member where name = ? limit 1; Top-N query의 SQL문은 DBMS 마다 다름
 
     // 이 2개쿼리를 작성하려면? 메소드를 만들어야됨
     // select * from member where email = ?
