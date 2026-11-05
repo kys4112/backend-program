@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.kys.springdeveloper.dao.Article;
 import me.kys.springdeveloper.dto.ArticleCreationRequest;
 import me.kys.springdeveloper.repository.BlogRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,6 +33,12 @@ class BlogApiControllerTest {
 
     @Autowired
     private BlogRepository blogRepository;
+
+//    정리코드
+    @AfterEach
+    public void cleanUp() {
+        blogRepository.deleteAll();
+    }
 
     @DisplayName("addArticle : 블로그 글 추가에 성공한다.")
     @Test
@@ -50,6 +59,24 @@ class BlogApiControllerTest {
         Article article = articles.get(0);
         assertThat(article.getTitle()).isEqualTo(title);
         assertThat(article.getContent()).isEqualTo(content);
+    }
 
+//    이건 DATA JPA가 아니기 때문에 저장되어있음. 그래서 오류가 나고, 위에 정리코드를 추가해줘야된다.
+    @DisplayName("모든 블로그글 조회에 성공한다.")
+    @Test
+    public void getAllArticles() throws Exception {
+        // 준비 given : url, 데이터
+        String url = "/api/articles";
+        String title = "11월 5일 두번째 시간";
+        String content = "모든 블로그글 조회 테스트 코드 작성";
+        blogRepository.save(Article.builder().content(content).title(title).build());
+
+        // 실행 when
+        ResultActions resultActions = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
+
+        // 검증 then : DB에서 인출해보겠다.
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value(title))
+                .andExpect(jsonPath("$[0].content").value(content));
     }
 }
