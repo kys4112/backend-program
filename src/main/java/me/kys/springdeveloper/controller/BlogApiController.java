@@ -7,10 +7,7 @@ import me.kys.springdeveloper.dto.ArticleResponse;
 import me.kys.springdeveloper.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +39,15 @@ public class BlogApiController {
 //        stream()이 이해가 안된다면 test.java로 가셈
         List<ArticleResponse> articleResponseList = blogService.findAll().stream().map(ArticleResponse::new).toList();
         return ResponseEntity.ok().body(articleResponseList);
-
+    }
+    @GetMapping("/api/articles/{id}")
+    public ResponseEntity<ArticleResponse> getById(@PathVariable Long id) {
+        Article article = blogService.getById(id);
+        return ResponseEntity.ok().body(new ArticleResponse(article));
+    }
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
+        Article article = blogService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -19,4 +19,11 @@ public class BlogService {
     public List<Article> findAll() {
         return blogRepository.findAll();
     }
+    public Article getById(Long id) {
+        return blogRepository.findById(id).get();
+    }
+    public Article deleteById(Long id) {
+        blogRepository.deleteById(id);
+        return null;
+    }
 }
