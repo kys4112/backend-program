@@ -26,4 +26,8 @@ public class Article {
         this.title = title;
         this.content = content;
     }
+    public void updateArticle(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
