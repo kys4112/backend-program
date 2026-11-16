@@ -52,8 +52,8 @@ public class BlogApiController {
         return ResponseEntity.ok().build();
     }
     @PutMapping("/api/articles/{id}")
-    public ResponseEntity<ArticleResponse> updateArticle(@PathVariable Long id, @RequestBody ArticleUpdateRequest req) {
-        Article article = blogService.updateArticle(id, req);
+    public ResponseEntity<ArticleResponse> updateArticle(@PathVariable Long id, @RequestBody ArticleUpdateRequest request) {
+        Article article = blogService.updateArticle(id, request);
         ArticleResponse articleResponse = new ArticleResponse(article);
         return ResponseEntity.ok().body(articleResponse);
     }

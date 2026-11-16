@@ -1,12 +1,12 @@
 package me.kys.springdeveloper.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import me.kys.springdeveloper.dao.Article;
 import me.kys.springdeveloper.dto.ArticleCreationRequest;
 import me.kys.springdeveloper.dto.ArticleUpdateRequest;
 import me.kys.springdeveloper.repository.BlogRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,17 +24,30 @@ public class BlogService {
     public Article getById(Long id) {
         return blogRepository.findById(id).get();
     }
-    public Article deleteById(Long id) {
+    public void deleteById(Long id) {
         blogRepository.deleteById(id);
-        return null;
     }
 //    public Article updateArticle(Long id, ArticleUpdateRequest req) {
 //        Article article = Article.builder().title(req.getTitle()).content(req.getContent()).build();
 //    }
+
+//    @Transactional
+//    public Article updateArticle(Long id, ArticleUpdateRequest req) {
+//        Article article = blogRepository.findById(id).get();
+//        article.updateArticle(req.getTitle(), req.getContent());
+//        return article;
+//    }
+
+
+//    public Article updateArticle(Long id, ArticleUpdateRequest req) {
+//        Article article = blogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Article not found"));
+//        article.update(req.getTitle(), req.getContent());
+//        return blogRepository.save(article);
+//    }
     @Transactional
     public Article updateArticle(Long id, ArticleUpdateRequest req) {
-        Article article = blogRepository.findById(id).get();
-        article.updateArticle(req.getTitle(), req.getContent());
+        Article article = blogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Article not found"));
+        article.update(req.getTitle(), req.getContent());
         return article;
     }
 
