@@ -4,6 +4,7 @@ package me.kys.springdeveloper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.kys.springdeveloper.dao.Article;
 import me.kys.springdeveloper.dto.ArticleCreationRequest;
+import me.kys.springdeveloper.dto.ArticleUpdateRequest;
 import me.kys.springdeveloper.repository.BlogRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -78,5 +79,25 @@ class BlogApiControllerTest {
         resultActions.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(title))
                 .andExpect(jsonPath("$[0].content").value(content));
+    }
+//    야자시간에 했던거(수정필요)(put으로 수정하는것)
+    @DisplayName("지정 블로그글 수정에 성공한다.")
+    @Test
+    public void updateArticle() throws Exception {
+        // 준비 given : url, 기존 데이터, 수정할 데이터
+        String url = "/api/articles/{id}";
+        Article saved = blogRepository.save(Article.builder().title("야자시간").content("4시까지").build());
+        String newTitle = "home";
+        String newContent = "집에 가고 싶다";
+        ArticleUpdateRequest request = new ArticleUpdateRequest(newTitle, newContent);
+        // 실행 when
+        ResultActions resultActions = mockMvc.perform(put(url, saved.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)));
+        // 검증 then
+        resultActions.andExpect(status().isOk());
+        Article article = blogRepository.findById(saved.getId()).get();
+        assertThat(article.getTitle()).isEqualTo(newTitle);
+        assertThat(article.getContent()).isEqualTo(newContent);
     }
 }
