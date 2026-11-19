@@ -80,7 +80,7 @@ class BlogApiControllerTest {
                 .andExpect(jsonPath("$[0].title").value(title))
                 .andExpect(jsonPath("$[0].content").value(content));
     }
-//    야자시간에 했던거(수정필요)(put으로 수정하는것)
+//    야자시간에 했던거
     @DisplayName("지정 블로그글 수정에 성공한다.")
     @Test
     public void updateArticle() throws Exception {
@@ -96,8 +96,20 @@ class BlogApiControllerTest {
                         .content(objectMapper.writeValueAsString(request)));
         // 검증 then
         resultActions.andExpect(status().isOk());
-        Article article = blogRepository.findById(saved.getId()).get();
+        Article article = blogRepository.findById(saved.getId()).orElseThrow();
         assertThat(article.getTitle()).isEqualTo(newTitle);
         assertThat(article.getContent()).isEqualTo(newContent);
     }
+//    과제: CRUD 기능에 대한 JUnit 테스트를 구현하라 (추가필요)
+    @DisplayName("블로그글 삭제에 성공한다.")
+    @Test
+    public void deleteArticle() throws Exception {
+        // 준비 given
+
+        // 실행 when
+
+        // 검증 then
+
+    }
+
 }

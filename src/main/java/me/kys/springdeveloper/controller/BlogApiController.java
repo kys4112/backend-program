@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor  // final 필드만 모아서 생성자를 만듦
-@RestController
+@RestController // @Controller + @ResponseBody → 반환 객체를 JSON으로 응답 (@Controller는 뷰 이름을 반환해서 HTML 템플릿을 보여줌)
 public class BlogApiController {
     private final BlogService blogService;
     @PostMapping("/api/articles")

@@ -27,6 +27,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok' // 반복적인 메서드 작성 작업을 줄여주는 롬복
     annotationProcessor 'org.projectlombok:lombok'
     testRuntimeOnly  'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 
